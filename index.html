@@ -7,6 +7,14 @@
   <body>
     <div>
       <p>
+        <label for="authGrant">Authorization Grant</label>
+        <select id="authGrant">
+          <option value="authorizationCode">Authorization Code</option>
+          <option value="implicit">Implicit</option>
+          <option value=""></option>
+        </select>
+      </p>
+      <p>
           <label for="clientIdInput">Client Id</label>
           <input id="clientIdInput" type="text">
       </p>
@@ -14,6 +22,15 @@
           <label for="metadataUrlInput">Metadata Url</label>
           <input id="metadataUrlInput" type="text">
       </p>
+      <p>
+        <label for="scopesInput">Scopes</label>
+        <input id="scopesInput" type="text" placeholder="scope1,scope2,scope3">
+      </p>
+      <p>
+        <label for="redirectUrl">Redirect Url</label>
+        <input id="redirectUrl" type="text">
+      </p>
+      
       <button>Check</button>
     </div>
   </body>
