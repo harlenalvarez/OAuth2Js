@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
   entry: {
-    index: './src/index.js'
+    index: './index.js'
   },
   output: {
     filename: '[name].js',
@@ -28,6 +28,10 @@ const config = {
         }
       }
     ]
+  },
+  devtool: 'inline-source-map',
+  devServer:{
+    port:3000
   }
 };
 module.exports = config;
