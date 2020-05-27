@@ -18,11 +18,11 @@ export class ImplicitService {
 
   login(state='') {
     const authUrl = new URL(this.oauthConfig.OauthEndpoints.AuthorizationEndpoint);
-    authUrl.searchParams.append('response_type', 'id_token');
-    authUrl.searchParams.append('client_id', encodeURIComponent(this.oauthConfig?.ClientId));
-    authUrl.searchParams.append('redirect_uri', encodeURIComponent(this.oauthConfig.RedirectUrl));
-    authUrl.searchParams.append('scope', encodeURIComponent(this.oauthConfig.Scope));
-    authUrl.searchParams.append('state', encodeURIComponent(state || NewGuid()));
+    authUrl.searchParams.append('response_type', 'token');
+    authUrl.searchParams.append('client_id', this.oauthConfig?.ClientId);
+    authUrl.searchParams.append('redirect_uri', this.oauthConfig.RedirectUrl);
+    authUrl.searchParams.append('scope', this.oauthConfig.Scope);
+    authUrl.searchParams.append('state', state || NewGuid());
     window.location.assign(authUrl.href);
   }
 

@@ -33,7 +33,7 @@ fdescribe('Implicit service', () => {
     const config = createTestConfig(new OauthEndpoints({AuthorizationEndpoint: 'https://test.com', TokenEndpoint: 'https://test.com'}))
     const service = new ImplicitService(config);
     service.login(state);
-    expect(window.location.assign).toBeCalledWith(`https://test.com/?response_type=id_token&client_id=test-clientId&redirect_uri=https%253A%252F%252FredirectUrl.com&scope=user.read%252Cuser.write&state=${state}`);
+    expect(window.location.assign).toBeCalledWith(`https://test.com/?response_type=token&client_id=test-clientId&redirect_uri=https%3A%2F%2FredirectUrl.com&scope=user.read%2Cuser.write&state=${state}`);
   });
 });
 
