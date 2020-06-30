@@ -1,6 +1,5 @@
 import { OauthConfig, OauthEndpoints } from "../../config/OauthConfig";
 import { ImplicitService } from "./Implicit.service";
-import { URLSearchParams } from "url";
 import { NewGuid } from '../Utility';
 
 var nodeCrypto = require('crypto');
@@ -8,7 +7,7 @@ global.crypto = {
     getRandomValues: function(buffer) { return nodeCrypto.randomFillSync(buffer);}
 };
 
-fdescribe('Implicit service', () => {
+describe('Implicit service', () => {
   it('Should set the oauth endpoints', ()=>{
     const endpoints = new OauthEndpoints({AuthorizationEndpoint: 'test.com', TokenEndpoint: 'test.com'});
     const config = createTestConfig(endpoints);

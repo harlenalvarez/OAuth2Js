@@ -1,1 +1,1 @@
-export { NewGuid } from './Oauth.utilities';
+export { NewGuid, GenerateLoginUrl } from './Oauth.utilities';

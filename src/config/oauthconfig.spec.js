@@ -1,6 +1,6 @@
 import { OauthConfig, OauthEndpoints } from "./OauthConfig";
 
-fdescribe('OauthConfig', () => {
+describe('OauthConfig', () => {
   it('Should Init With Implicit GrantType', () => {
     const config = new OauthConfig({ClientId: '123', RedirectUrl: 'test.com', AuthorizationMetadataUrl: 'test.com'});
     expect(config.GrandType).toEqual('Implicit');
@@ -53,6 +53,4 @@ fdescribe('OauthConfig', () => {
     const config = new OauthConfig({ClientId: 123, RedirectUrl: 'test.com', Scope: 'user.read', OauthEndpoints:oauthEndpoints});
     expect(config.OauthEndpoints.AuthorizationEndpoint).toEqual('test.com');
   });
-
-  
 });

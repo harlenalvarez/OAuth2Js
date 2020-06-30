@@ -1,5 +1,5 @@
 import { OauthEndpoints } from "../../config/OauthConfig";
-import { NewGuid } from "../Utility";
+import { NewGuid, GenerateLoginUrl } from "../Utility";
 
 
 export class ImplicitService {
@@ -16,13 +16,15 @@ export class ImplicitService {
     this.getAccessTokenAsync = this.getAccessTokenAsync.bind(this);
   }
 
-  login(state='') {
-    const authUrl = new URL(this.oauthConfig.OauthEndpoints.AuthorizationEndpoint);
-    authUrl.searchParams.append('response_type', 'token');
-    authUrl.searchParams.append('client_id', this.oauthConfig?.ClientId);
-    authUrl.searchParams.append('redirect_uri', this.oauthConfig.RedirectUrl);
-    authUrl.searchParams.append('scope', this.oauthConfig.Scope);
-    authUrl.searchParams.append('state', state || NewGuid());
+  login(state=null) {
+    const authUrl = GenerateLoginUrl({
+      authEndpoint: this.oauthConfig?.OauthEndpoints?.AuthorizationEndpoint,
+      responseType: 'token',
+      clientId: this.oauthConfig?.ClientId,
+      redirectUrl: this.oauthConfig?.RedirectUrl,
+      scope: this.oauthConfig?.Scope,
+      state: state || NewGuid()
+    });
     window.location.assign(authUrl.href);
   }
 
