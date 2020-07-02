@@ -17,9 +17,13 @@
           <input id="clientIdInput" type="text" />
       </p>
       <p>
-          <label for="metadataUrlInput">Metadata Url</label>
-          <input id="metadataUrlInput" type="text" />
+          <label for="tokenUrlInput">Token Url</label>
+          <input id="tokenUrlInput" type="text" />
       </p>
+      <p>
+        <label for="authUrlInput">Auth Url</label>
+        <input id="authUrlInput" type="text" />
+    </p>
       <p>
         <label for="scopesInput">Scopes</label>
         <input id="scopesInput" type="text" placeholder="scope1,scope2,scope3" />
@@ -33,14 +37,7 @@
         <input id="audienceInput" type="text"/>
       </p>
       
-      <button>Check</button>
+      <button id="checkButton">Check</button>
     </div>
-    <script>
-      (function(document) {
-        const grantType = document.getElementById('authGrant');
-        const clientId = document.getElementById('clientIdInput');
-        const metadataUrlInput = document.getElementById('metadataUrlInput');
-      })(document);
-    </script>
   </body>
 </html>

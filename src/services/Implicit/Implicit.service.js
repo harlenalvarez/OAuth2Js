@@ -1,9 +1,16 @@
-import { OauthEndpoints } from "../../config/OauthConfig";
-import { NewGuid } from "../Utility";
+import { OauthEndpoints, OauthConfig } from '../../config/OauthConfig';
+import { NewGuid, GenerateLoginUrl } from '../utilities';
+import { TokenStorage } from '../storage';
 
 
 export class ImplicitService {
-  constructor(oauthConfig) {
+  /**
+   * 
+   * @param { OauthConfig } oauthConfig
+   * @param { Object } dependencies - Mainly used for testing
+   * @param { TokenStorage } dependencies.tokenStorage
+   */
+  constructor(oauthConfig, { tokenStorage = null } = {}) {
     if(!oauthConfig?.OauthEndpoints){
       throw new TypeError('OauthEndpoints is required');
     }
@@ -13,20 +20,47 @@ export class ImplicitService {
     
     this.oauthConfig = oauthConfig;
     this.login = this.login.bind(this);
-    this.getAccessTokenAsync = this.getAccessTokenAsync.bind(this);
+    this.onLoad = this.onLoad.bind(this);
+    this.tokenStorage = tokenStorage ?? new TokenStorage({storageType: oauthConfig.StorageType});
+    this.onLoad();
   }
 
-  login(state='') {
-    const authUrl = new URL(this.oauthConfig.OauthEndpoints.AuthorizationEndpoint);
-    authUrl.searchParams.append('response_type', 'id_token');
-    authUrl.searchParams.append('client_id', encodeURIComponent(this.oauthConfig?.ClientId));
-    authUrl.searchParams.append('redirect_uri', encodeURIComponent(this.oauthConfig.RedirectUrl));
-    authUrl.searchParams.append('scope', encodeURIComponent(this.oauthConfig.Scope));
-    authUrl.searchParams.append('state', encodeURIComponent(state || NewGuid()));
+  /**
+   * Directs user to login page
+   * @param {string} state - Optional state, mainly used for testing
+   */
+  login(state=null) {
+    const authUrl = GenerateLoginUrl({
+      authEndpoint: this.oauthConfig?.OauthEndpoints?.AuthorizationEndpoint,
+      responseType: 'token',
+      clientId: this.oauthConfig?.ClientId,
+      redirectUrl: this.oauthConfig?.RedirectUrl,
+      scope: this.oauthConfig?.Scope,
+      state: state || NewGuid()
+    });
     window.location.assign(authUrl.href);
   }
 
-  getAccessTokenAsync() {
+  /**
+   * Checks if token is in url
+   * @returns {(string | null)} - Access Token or null
+   */
+  onLoad() {
+    const redirectResponse = window.location.hash;
+    if(!redirectResponse.includes('token_type')){
+      return;
+    }
 
+    const tokenResponse = new URLSearchParams(window.location.hash.substring(1));
+    if(tokenResponse.get('state') !== this.tokenStorage.State) {
+      console.error('Invalid State');
+      return;
+    }
+    const token = {
+      accessToken: tokenResponse.get('access_token'),
+      tokenType: tokenResponse.get('token_type'),
+      expiration: tokenResponse.get('expires_in')
+    };
+    this.tokenStorage.AccessToken = token;
   }
 }
