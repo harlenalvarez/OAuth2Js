@@ -1,4 +1,4 @@
-import { TokenStorage } from "./token.storage";
+import { TokenStorage } from "./Token.storage";
 import { NewGuid } from '../utilities';
 
 import { MockCrypto } from '../utilities/MockUtilities';
