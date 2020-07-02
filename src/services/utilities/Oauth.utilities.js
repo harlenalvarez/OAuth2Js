@@ -8,7 +8,6 @@ export function NewGuid() {
   );
 }
 
-
 /**
  * 
  * @param {Object} UrlQueryValues - Auth url query property values

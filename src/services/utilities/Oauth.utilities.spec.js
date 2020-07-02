@@ -1,9 +1,7 @@
 import { NewGuid, GenerateLoginUrl } from "./Oauth.utilities";
+import { MockCrypto } from '../utilities/MockUtilities';
 
-var nodeCrypto = require('crypto');
-global.crypto = {
-    getRandomValues: function(buffer) { return nodeCrypto.randomFillSync(buffer);}
-};
+MockCrypto();
 
 describe('Oauth Utilities', () => {
     const responseType = 'testResponse';

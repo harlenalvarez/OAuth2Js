@@ -20,8 +20,13 @@ export class OauthEndpoints {
   }
 }
 
+/**
+ * Oauth config
+ * @class
+ * @classdesc Configuration settings for the oauth library
+ */
 export class OauthConfig {
-  constructor({ Provider = 'AzureAD', GrandType = 'Implicit', Audience = '', Scope, ClientId, RedirectUrl, AuthorizationMetadataUrl, OauthEndpoints } = {}) {
+  constructor({ Provider = 'AzureAD', GrandType = 'Implicit', Audience = '', Scope, ClientId, RedirectUrl, AuthorizationMetadataUrl, OauthEndpoints, StorageType = 'local' } = {}) {
     const required = [];
     const allowedProviders = ['AzureAD', 'Custom' ]
     if(!ClientId){
@@ -54,5 +59,6 @@ export class OauthConfig {
     this.AuthorizationMetadataUrl = AuthorizationMetadataUrl;
     this.OauthEndpoints = OauthEndpoints;
     this.Audience = Audience;
+    this.StorageType = StorageType;
   }
 }
